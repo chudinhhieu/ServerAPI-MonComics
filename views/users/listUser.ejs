@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <title>
+        <%= title %>
+    </title>
+    <link rel="stylesheet" href="../css/app.css">
+</head>
+
+<body class="m-0 p-0 container-fluid">
+    <%- include('../inc/header') %>
+        <div class="m-4">
+            <% if(listUser.length != 0) {%>
+                <a href="/users/add" class="btn btn-add fw-medium float-end mb-2">Thêm người dùng</a>
+
+
+                <table class="table table-hover table-bordered mt-2">
+                    <thead>
+                        <tr class="text-center">
+                            <th class="text-primary col-md-2" scope="col">ID</th>
+                            <th class="text-primary col-md-1" scope="col">Ảnh đại diện</th>
+                            <th class="text-primary col-md-2" scope="col">Họ và tên</th>
+                            <th class="text-primary col-md-2" scope="col">Tài khoản</th>
+                            <th class="text-primary col-md-2" scope="col">Email</th>
+                            <th class="text-primary col-md-2" scope="col">Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% listUser.forEach((item)=>{%>
+
+                            <tr class="align-middle text-center">
+                                <td scope="row">
+                                    <%= item._id %>
+                                </td>
+                                <td>
+                                    <img src="user_avatar/<%= item.avatar %>" alt="Loading image..."
+                                        style="width: 120px; height: 120px;">
+                                </td>
+                                <td>
+                                    <p class="text-center">
+                                        <%= item.fullname %>
+                                    </p>
+                                </td>
+                                <td>
+                                    <p>
+                                        <%= item.username %>
+                                    </p>
+                                </td>
+
+                                <td>
+                                    <p class="text-center">
+                                        <%= item.email %>
+                                    </p>
+                                </td>
+                                <td class="text-center">
+                                    <a href="users/edit/<%= item._id %>" class="btn btn-success me-4">Cập nhật</a>
+
+                                    <button data-item-id="<%= item._id %>" data-item-username="<%= item.username %>"
+                                        class="btn btn-danger" data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal">Xóa</button>
+                                </td>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+
+                <% }else{ %>
+                    <div class="d-flex justify-content-center">
+                        <h5>Bạn chưa có người dùng nào. <a href="/users/add">Thêm tại đây!</a></h5>
+                    </div>
+                    <% } %>
+                    <!-- Modal delete user -->
+                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="deleteModalLabel">Xóa người dùng</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <form action="users/delete" method="POST">
+                                        <div class="modal-body">
+                                            Bạn chắc chắn muốn xóa?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Hủy</button>
+                                            <button type="submit" class="btn btn-primary">Đồng ý</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+        </div>
+        <%- include('../inc/footer') %>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+                integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+                crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
+                integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
+                crossorigin="anonymous"></script>
+            <script>
+                const deleteButtons = document.querySelectorAll('.btn.btn-danger');
+                const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+                const deleteForm = document.querySelector('form[action="users/delete"]');
+
+                // Bắt sự kiện khi nút "Delete" được nhấn
+                deleteButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        // Lấy giá trị item_id từ thuộc tính dữ liệu (data attribute)
+                        const itemId = this.getAttribute('data-item-id');
+                        const itemUserName = this.getAttribute('data-item-username');
+                        // Truy xuất phần tử trong modal để cập nhật nội dung
+                        const modalBody = deleteModal._element.querySelector('.modal-body');
+                        // Cập nhật nội dung modal với item_id tương ứng
+                        modalBody.textContent = `Bạn chắc chắn muốn xóa tài khoản "${itemUserName}" ?`;
+                        // Thay đổi giá trị của thuộc tính action của form khi nút "Delete" được nhấn
+                        deleteForm.action = `users/delete/${itemId}`;
+                    });
+                });
+            </script>
+</body>
+
+</html>

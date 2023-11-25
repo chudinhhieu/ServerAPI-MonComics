@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a href="/" class="navbar-brand col-md-0.5 a-logo-header">
+            <img class="img-logo-header" src="/images/logo.png" alt="Ảnh lỗi">
+        </a>
+        <div class="collapse navbar-collapse col-md-9.5" id="navbarNavDropdown">
+            <ul class="w-100 navbar-nav d-flex justify-content-evenly">
+                <li class="nav-item">
+                    <a class="nav-link fw-medium fs-5 " aria-current="page" href="/">Thống kê</a>
+                </li>   
+                <li class="nav-item">
+                    <a class="nav-link fw-medium fs-5" href="/genres">Thể loại</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-medium fs-5" href="/comics">Truyện tranh</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-medium fs-5" href="/comments">Bình luận</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-medium fs-5" href="/users">Người dùng</a>
+                </li>
+            </ul>
+        </div>
+        <!-- Dùng lớp "d-none d-md-block" để ẩn user-info khi ở kích cỡ điện thoại (nhỏ hơn "md") -->
+        <div class="user-info col-md-2">
+            <div class="dropdown">
+                <div class="dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img class="user-avatar" src="/images/avatar_default.png" alt="Avatar">
+                    Chu Đình Hiếu
+                </div>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                
+                    <li><a class="dropdown-item" href="/login">Đăng xuất</a></li>
+                </ul>
+            </div>
+        </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</nav>

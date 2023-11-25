@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <title>
+        <%= title %>
+    </title>
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+
+<body class="m-0 p-0 container-fluid">
+    <%- include('../inc/header') %>
+        <div class="d-flex justify-content-center mt-4">
+            <h2>Cập nhật người dùng</h2>
+        </div>
+        <div class="d-flex justify-content-center mt-2">
+            <form method="POST" enctype="multipart/form-data" class="g-3 needs-validation" novalidate>
+                <div class="col-md-12 mb-2">
+                    <label for="fullname" class="form-label">Họ và tên</label>
+                    <input value="<%= userEdit.fullname  %>" name="fullname" type="text" class="form-control" id="fullname" required></input>
+                    <div class="invalid-feedback">Vui lòng nhập họ và tên từ 4 đến 20 kí tự!</div>
+                    <div class="valid-feedback">
+                        Chính xác!
+                    </div>
+                </div>
+                <div class="col-md-12 mb-2">
+                    <label for="username" class="form-label">Tài khoản</label>
+                    <input disabled value="<%= userEdit.username  %>" name="username" type="text" class="form-control" id="username" required>
+                    <div class="invalid-feedback">Vui lòng nhập tài khoản từ 4 đến 20 kí tự!</div>
+                    <div class="valid-feedback">
+                        Chính xác!
+                    </div>
+                </div>
+                <div class="col-md-12 mb-2">
+                    <label for="password" class="form-label">Mật khẩu</label>
+                    <input disabled value="<%= userEdit.password  %>" name="password" type="password" class="form-control" id="password" required></input>
+                    <div class="invalid-feedback">Vui lòng nhập tài khoản từ 4 đến 20 kí tự!</div>
+                    <div class="valid-feedback">
+                        Chính xác!
+                    </div>
+                </div>
+                <div class="col-md-12 mb-2">
+                    <label for="email" class="form-label">Email</label>
+                    <input value="<%= userEdit.email  %>" name="email" type="email" class="form-control" id="email" required></input>
+                    <div class="invalid-feedback">Vui lòng nhập đúng định dạng (Ví dụ: abcdxyz@gmail.com)</div>
+                    <div class="valid-feedback">
+                        Chính xác!
+                    </div>
+                </div>
+                
+               
+                <div class="col-md-12 mb-2">
+                    <label for="avatar" class="form-label">Ảnh đại diện</label>
+                    <input id="avatarInput" name="avatar" type="file" class="form-control" aria-label="file example" required onchange="previewAvatar()">
+                    <div class="invalid-feedback">Vui lòng chọn ảnh đại diện</div>
+                    <div class="valid-feedback">
+                        Chính xác!
+                    </div>
+                </div>
+                <div class="text-center">
+                    <img class="border border-info-subtle border-2 rounded-circle" id="avatarPreview" src="/user_avatar/<%= userEdit.avatar %>" alt="Loading image..." style="width: 120px; height: 120px;">
+                </div>
+                
+                <div class="col-12 mt-4">
+                    <button class="btn btn-primary" type="submit">Xác nhận</button>
+                </div>
+            </form>
+        </div>
+        <%- include('../inc/footer') %>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+                integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+                crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
+                integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
+                crossorigin="anonymous"></script>
+                <script>
+                    function previewAvatar() {
+                        const avatarInput = document.getElementById("avatarInput");
+                        const avatarPreview = document.getElementById("avatarPreview");
+                
+                        if (avatarInput.files && avatarInput.files[0]) {
+                            const reader = new FileReader();
+                
+                            reader.onload = function (e) {
+                                avatarPreview.src = e.target.result;
+                            };
+                
+                            reader.readAsDataURL(avatarInput.files[0]);
+                        }
+                    }
+                </script>
+                
+             <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const form = document.querySelector('.needs-validation');
+                        const submitButton = document.querySelector('button[type="submit"]');
+                        form.addEventListener('submit', function (event) {
+                            if (!form.checkValidity()) {
+                                event.stopPropagation();
+                                form.classList.add('was-validated');
+                            }
+                        });
+                    });
+                </script>
+</body>
+
+</html>
